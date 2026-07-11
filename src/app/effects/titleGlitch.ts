@@ -1,16 +1,18 @@
 import { ChaosEffect } from ".";
+import { CONFIG } from "../lib/config";
 
 export const titleGlitch: ChaosEffect = {
   id: "title-glitch",
-  unlockAt: 15,
 
-  run() {
-    const oldTitle = document.title;
+  unlockAt: CONFIG.EFFECTS.TITLE_GLITCH_AT,
+
+  onUnlock() {
+    const originalTitle = document.title;
 
     document.title = "DON'T CLICK";
 
     setTimeout(() => {
-      document.title = oldTitle;
+      document.title = originalTitle;
     }, 500);
   },
 };
