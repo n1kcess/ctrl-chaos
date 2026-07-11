@@ -1,27 +1,24 @@
+import { CONFIG } from "./config";
+
 export const phases = [
   {
-    from: 0,
-    to: 9,
+    min: CONFIG.PHASES.STABLE,
     name: "Stable",
   },
   {
-    from: 10,
-    to: 24,
+    min: CONFIG.PHASES.WATCHING,
     name: "Watching",
   },
   {
-    from: 25,
-    to: 49,
+    min: CONFIG.PHASES.CONCERNED,
     name: "Concerned",
   },
   {
-    from: 50,
-    to: 99,
+    min: CONFIG.PHASES.HOSTILE,
     name: "Hostile",
   },
   {
-    from: 100,
-    to: Infinity,
+    min: 0,
     name: "Corrupted",
   },
 ];
