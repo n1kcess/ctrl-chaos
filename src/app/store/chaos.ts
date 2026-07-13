@@ -6,8 +6,13 @@ interface ChaosState {
   stability: number;
   clicks: number;
 
+  overlay: string | null;
+
   click: () => void;
   reset: () => void;
+
+  showOverlay: (text: string) => void;
+  hideOverlay: () => void;
 }
 
 export const useChaosStore = create<ChaosState>()(
@@ -15,6 +20,8 @@ export const useChaosStore = create<ChaosState>()(
     (set) => ({
       stability: CONFIG.INITIAL_STABILITY,
       clicks: 0,
+
+      overlay: null,
 
       click: () =>
         set((state) => ({
@@ -26,6 +33,17 @@ export const useChaosStore = create<ChaosState>()(
         set({
           stability: CONFIG.INITIAL_STABILITY,
           clicks: 0,
+          overlay: null,
+        }),
+
+      showOverlay: (text) =>
+        set({
+          overlay: text,
+        }),
+
+      hideOverlay: () =>
+        set({
+          overlay: null,
         }),
     }),
     {

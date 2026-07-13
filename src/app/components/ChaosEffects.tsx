@@ -7,15 +7,15 @@ import { effects } from "../effects";
 export default function ChaosEffects() {
   const { clicks } = useChaosStore();
 
-  const unlockedEffects = useRef(new Set<string>());
+  const unlocked = useRef(new Set<string>());
 
   useEffect(() => {
     effects.forEach((effect) => {
       if (
         clicks >= effect.unlockAt &&
-        !unlockedEffects.current.has(effect.id)
+        !unlocked.current.has(effect.id)
       ) {
-        unlockedEffects.current.add(effect.id);
+        unlocked.current.add(effect.id);
         effect.onUnlock?.();
       }
     });
@@ -24,7 +24,7 @@ export default function ChaosEffects() {
   useEffect(() => {
     const interval = setInterval(() => {
       effects.forEach((effect) => {
-        if (unlockedEffects.current.has(effect.id)) {
+        if (unlocked.current.has(effect.id)) {
           effect.update?.();
         }
       });
@@ -32,6 +32,11 @@ export default function ChaosEffects() {
 
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+    if (clicks === 0) {
+      unlocked.current.clear();
+    }
+  }, [clicks]);
 
   return null;
 }

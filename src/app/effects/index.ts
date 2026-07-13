@@ -1,12 +1,14 @@
 import { titleGlitch } from "./titleGlitch";
-
+import { fakeLoading } from "./fakeLoading";
 export interface ChaosEffect {
   id: string;
   unlockAt: number;
 
-  run: () => void;
+  onUnlock?: () => void;
+  update?: () => void;
 }
 
-export const effects = [
+export const effects: ChaosEffect[] = [
   titleGlitch,
+  fakeLoading,
 ];
