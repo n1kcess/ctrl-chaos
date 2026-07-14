@@ -12,5 +12,6 @@ export const CONFIG = {
     TITLE_GLITCH_AT: 15,
     BUTTON_SHAKE_AT: 25,
     BUTTON_ESCAPE_AT: 50,
+    BUTTON_AI_AT: 50,
   },
 } as const;

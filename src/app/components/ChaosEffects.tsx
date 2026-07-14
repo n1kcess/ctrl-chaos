@@ -11,32 +11,41 @@ export default function ChaosEffects() {
 
   useEffect(() => {
     effects.forEach((effect) => {
-      if (
+      const shouldBeActive =
         clicks >= effect.unlockAt &&
-        !unlocked.current.has(effect.id)
-      ) {
+        (!effect.disableAt || clicks <= effect.disableAt);
+
+      const isActive = unlocked.current.has(effect.id);
+
+      if (shouldBeActive && !isActive) {
         unlocked.current.add(effect.id);
         effect.onUnlock?.();
+      }
+
+      if (!shouldBeActive && isActive) {
+        unlocked.current.delete(effect.id);
+        effect.onDisable?.();
       }
     });
   }, [clicks]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let animationFrame: number;
+
+    const loop = () => {
       effects.forEach((effect) => {
         if (unlocked.current.has(effect.id)) {
           effect.update?.();
         }
       });
-    }, 100);
 
-    return () => clearInterval(interval);
+      animationFrame = requestAnimationFrame(loop);
+    };
+
+    animationFrame = requestAnimationFrame(loop);
+
+    return () => cancelAnimationFrame(animationFrame);
   }, []);
-  useEffect(() => {
-    if (clicks === 0) {
-      unlocked.current.clear();
-    }
-  }, [clicks]);
 
   return null;
 }
