@@ -7,6 +7,7 @@ export interface ChaosEffect {
   disableAt?: number;
 
   onUnlock?: () => void;
+  onDisable?: () => void;
   update?: () => void;
 }
 
