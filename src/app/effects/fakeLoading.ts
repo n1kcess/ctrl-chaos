@@ -1,22 +1,17 @@
 import { ChaosEffect } from ".";
-import { useChaosStore } from "../store/chaos";
+import { notify } from "../lib/notify";
+import { sleep } from "../lib/sleep";
 
 export const fakeLoading: ChaosEffect = {
   id: "fake-loading",
 
   unlockAt: 35,
 
-  onUnlock() {
-    const { showOverlay, hideOverlay } = useChaosStore.getState();
+  async onUnlock() {
+    notify("Saving...", 1000);
 
-    showOverlay("Saving...");
+    await sleep(1000);
 
-    setTimeout(() => {
-      showOverlay("Saved.");
-    }, 1000);
-
-    setTimeout(() => {
-      hideOverlay();
-    }, 1800);
+    notify("Saved.", 800);
   },
 };
