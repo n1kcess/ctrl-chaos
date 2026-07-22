@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface CharacterStore {
+interface CharacterMemory {
   firstVisit: number;
   lastVisit: number;
+
+  relationship: number;
 
   tabReturns: number;
   idleMoments: number;
@@ -12,7 +14,9 @@ interface CharacterStore {
   secretsFound: number;
   endingsSeen: number;
 
-  updateLastVisit: () => void;
+  setLastVisit: () => void;
+
+  increaseRelationship: (amount: number) => void;
 
   increaseTabReturns: () => void;
   increaseIdleMoments: () => void;
@@ -24,11 +28,13 @@ interface CharacterStore {
 
 const now = Date.now();
 
-export const useCharacterStore = create<CharacterStore>()(
+export const useCharacterMemory = create<CharacterMemory>()(
   persist(
     (set) => ({
       firstVisit: now,
       lastVisit: now,
+
+      relationship: 0,
 
       tabReturns: 0,
       idleMoments: 0,
@@ -37,30 +43,45 @@ export const useCharacterStore = create<CharacterStore>()(
       secretsFound: 0,
       endingsSeen: 0,
 
-      updateLastVisit: () =>
+
+      setLastVisit: () =>
         set({
           lastVisit: Date.now(),
         }),
+
+
+      increaseRelationship: (amount) =>
+        set((state) => ({
+          relationship: Math.min(
+            100,
+            state.relationship + amount
+          ),
+        })),
+
 
       increaseTabReturns: () =>
         set((state) => ({
           tabReturns: state.tabReturns + 1,
         })),
 
+
       increaseIdleMoments: () =>
         set((state) => ({
           idleMoments: state.idleMoments + 1,
         })),
+
 
       increaseButtonEscapes: () =>
         set((state) => ({
           buttonEscapes: state.buttonEscapes + 1,
         })),
 
+
       increaseSecretsFound: () =>
         set((state) => ({
           secretsFound: state.secretsFound + 1,
         })),
+
 
       increaseEndingsSeen: () =>
         set((state) => ({
