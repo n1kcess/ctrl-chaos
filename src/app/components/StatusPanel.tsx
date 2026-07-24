@@ -1,19 +1,23 @@
 "use client";
 
+import { useMemo } from "react";
 import { useChaosStore } from "../store/chaos";
-import { messages } from "../lib/messages";
 import { phases } from "../lib/phases";
+import { random } from "../lib/random";
 
 export default function StatusPanel() {
   const { stability, clicks, reset } = useChaosStore();
 
-  const message =
-    clicks === 0
-      ? "..."
-      : messages[Math.min(clicks - 1, messages.length - 1)];
+  const phase =
+    phases.find(
+      (phase) =>
+        clicks >= phase.min &&
+        clicks <= phase.max
+    ) ?? phases[0];
 
-const phase =
-  phases.find((phase) => stability >= phase.min)?.name ?? "Unknown";
+  const message = useMemo(() => {
+    return random(phase.messages);
+  }, [clicks, phase.id]);
 
   return (
     <div className="mb-8 text-center">
@@ -30,7 +34,7 @@ const phase =
       </p>
 
       <p className="mt-4 text-sm uppercase tracking-[0.3em] text-gray-400">
-        {phase}
+        {phase.name}
       </p>
 
       <p className="mt-4 text-lg italic">

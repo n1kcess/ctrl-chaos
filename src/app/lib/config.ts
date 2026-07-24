@@ -2,10 +2,10 @@ export const CONFIG = {
   INITIAL_STABILITY: 100,
 
   PHASES: {
-    STABLE: 90,
-    WATCHING: 70,
-    CONCERNED: 40,
-    HOSTILE: 15,
+    STABLE: 0,
+    WATCHING: 10,
+    CONCERNED: 50,
+    HOSTILE: 150,
   },
 
   EFFECTS: {
