@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
 import { useChaosStore } from "../store/chaos";
+import { useDialogueStore } from "../store/dialogue";
 import { phases } from "../lib/phases";
-import { random } from "../lib/random";
 
 export default function StatusPanel() {
   const { stability, clicks, reset } = useChaosStore();
+  const { current } = useDialogueStore();
 
   const phase =
     phases.find(
@@ -14,10 +14,6 @@ export default function StatusPanel() {
         clicks >= phase.min &&
         clicks <= phase.max
     ) ?? phases[0];
-
-  const message = useMemo(() => {
-    return random(phase.messages);
-  }, [clicks, phase.id]);
 
   return (
     <div className="mb-8 text-center">
@@ -38,7 +34,7 @@ export default function StatusPanel() {
       </p>
 
       <p className="mt-4 text-lg italic">
-        {message}
+        {current}
       </p>
 
       {process.env.NODE_ENV === "development" && (

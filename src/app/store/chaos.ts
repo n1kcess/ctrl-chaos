@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { CONFIG } from "../lib/config";
+import { useDialogueStore } from "./dialogue";
 
 interface ChaosState {
   stability: number;
@@ -17,16 +18,22 @@ export const useChaosStore = create<ChaosState>()(
       clicks: 0,
 
       click: () =>
-        set((state) => ({
-          clicks: state.clicks + 1,
-          stability: Math.max(0, state.stability - 1),
-        })),
+        set((state) => {
+          const newClicks = state.clicks + 1;
+          useDialogueStore.getState().setRandomMessage(newClicks);
+          return {
+            clicks: newClicks,
+            stability: Math.max(0, state.stability - 1),
+          };
+        }),
 
-      reset: () =>
+      reset: () => {
+        useDialogueStore.getState().reset();
         set({
           stability: CONFIG.INITIAL_STABILITY,
           clicks: 0,
-        }),
+        });
+      },
     }),
     {
       name: "chaos-save",
