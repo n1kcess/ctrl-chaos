@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useChaosStore } from "../store/chaos";
 import { effects } from "../effects";
+import { useDialogueStore } from "../store/dialogue";
 
 export default function ChaosEffects() {
   const { clicks } = useChaosStore();

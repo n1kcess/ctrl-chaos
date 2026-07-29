@@ -18,7 +18,6 @@ export const phases: Phase[] = [
     name: "Stable",
 
     messages: [
-      "...",
       "Click.",
       "Again.",
       "Interesting.",
