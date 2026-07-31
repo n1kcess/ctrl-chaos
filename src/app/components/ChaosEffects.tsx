@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { checkVisit } from "../lib/visitTracker";
 import { useChaosStore } from "../store/chaos";
 import { effects } from "../effects";
 import { useDialogueStore } from "../store/dialogue";
@@ -29,6 +30,10 @@ export default function ChaosEffects() {
       }
     });
   }, [clicks]);
+
+  useEffect(() => {
+    checkVisit();
+  }, []);
 
   useEffect(() => {
     let animationFrame: number;
