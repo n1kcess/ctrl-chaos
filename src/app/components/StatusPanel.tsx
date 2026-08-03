@@ -3,17 +3,23 @@
 import { useChaosStore } from "../store/chaos";
 import { useDialogueStore } from "../store/dialogue";
 import { phases } from "../lib/phases";
+import { useDisplayStore } from "../store/display";
+
 
 export default function StatusPanel() {
   const { stability, clicks, reset } = useChaosStore();
   const { current } = useDialogueStore();
+  const { fakeStability } = useDisplayStore();
+  
 
-  const phase =
+  const phase = 
     phases.find(
       (phase) =>
         clicks >= phase.min &&
         clicks <= phase.max
     ) ?? phases[0];
+
+
 
   return (
     <div className="mb-8 text-center">
@@ -22,7 +28,7 @@ export default function StatusPanel() {
       </h1>
 
       <p className="mb-2 text-xl">
-        System Stability: {stability}%
+        System Stability: {fakeStability ?? stability}%
       </p>
 
       <p className="text-gray-500">

@@ -17,7 +17,7 @@ export function checkVisit() {
   memory.setLastVisit();
 
   return {
-    wasAwayLong,
-    tabReturns: useCharacterMemory.getState().tabReturns,
+    greeting:
+        wasAwayLong ? "You came back." : null
   };
 }
