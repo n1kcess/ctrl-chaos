@@ -3,15 +3,15 @@ export const CONFIG = {
 
   PHASES: {
     STABLE: 0,
-    WATCHING: 10,
-    CONCERNED: 50,
-    HOSTILE: 150,
+    WATCHING: 50,
+    CONCERNED: 200,
+    HOSTILE: 400,
   },
 
   EFFECTS: {
-    TITLE_GLITCH_AT: 15,
-    BUTTON_SHAKE_AT: 25,
-    BUTTON_ESCAPE_AT: 50,
-    BUTTON_AI_AT: 50,
+    TITLE_GLITCH_AT: 30,
+    BUTTON_SHAKE_AT: 80,
+    BUTTON_ESCAPE_AT: 180,
+    BUTTON_AI_AT: 250,
   },
 } as const;
